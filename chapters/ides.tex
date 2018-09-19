@@ -1,0 +1,132 @@
+\chapter{IDES}
+
+\section{VSCode}
+
+\subsection{Some important files}
+
+c-cpp-properties.json contains all the configuration related things, like what is the location of libraries, the standard of compilers to use their path and so on. It is genrated by default once the a project is started.
+
+\bigbreak
+
+\begin{lstlisting}
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/mpi"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
+\end{lstlisting}
+
+
+\bigbreak
+\noindent\rule{\textwidth}{1pt}
+\bigbreak
+\noindent
+settings.json contains general information about the behaviour of the ide. It also contains the path to various soft wares like Julia. It also has a workspace settings tab that basically overwrites the default system-wide settings for that particular project.\\
+
+\begin{lstlisting}
+{
+    "python.pythonPath": "/home/himanshu/miniconda3",
+    "julia.executablePath": "/home/himanshu/Softwares/julia-1.0.0/bin/julia",
+    "julia.enableTelemetry": true,
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.formatOnPaste": true,
+    "editor.snippetSuggestions": "top",
+    "workbench.colorTheme": "Monokai",
+    "python.autoComplete.addBrackets": true,
+    "python.formatting.provider": "autopep8",
+    "editor.formatOnSave": true,
+    "julia.runlinter": false,
+    "[julia]": {}
+}
+\end{lstlisting}
+
+\bigbreak
+\noindent\rule{\textwidth}{1pt}
+\bigbreak
+\noindent
+tasks.json , if not present then create by using Ctlr-Shift-P follwed by Configure Tasks.
+This is the most important file in the sense that it contains all the compiler run-time options like debugging.
+
+\begin{lstlisting}
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build hello world",
+            "type": "shell",
+            "command": "mpicc",
+            "args": [
+                "-g",
+                "Main.c",
+                "-lm"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
+\end{lstlisting}
+
+
+\bigbreak
+\noindent\rule{\textwidth}{1pt}
+\bigbreak
+
+
+\noindent
+launch.json this file as far as I can guess is related to debugging.
+\\
+\\
+If it is not present then go to the debug menu and after selecting the appropriate debugger use the green run button then give the appropriate destination of the compiled code.
+
+\begin{lstlisting}
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/himanshu/Desktop/final-undergraduate_project/2D_code/a.out",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/himanshu/Desktop/final-undergraduate_project/2D_code/",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+\end{lstlisting}
+
+\subsection{c/cpp-debugging}
+
+Press the debug button on the sidebar. Can set breakpoints using the red dots that appear when the cursor is on the line-numbering. Click on the red-dots to get the option to edit them, this allows you to set conditions when the break-points will activate. Then run and enjoy. This can handle multi-threaded codes.
+
+
+

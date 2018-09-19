@@ -1,0 +1,94 @@
+\chapter{C}
+\section{General Things}
+\subsection{Quickies}
+\begin{enumerate}
+    \item time ./a.out ----- gives a quick summary of runtime.
+\end{enumerate}
+
+
+
+\section{Compilation time commands}
+\begin{enumerate}
+    \item -Wall -Wextra , start showing all warning some may appear only in -O2
+\end{enumerate}
+
+
+
+
+\section{Profiling and Debugging}
+\subsection{Using gbd}
+
+------- Ideally use VSCode built-in support for a user-friendly experience. Else
+\begin{enumerate}
+    \item ''''''''''''Compile with -g''''''''''' and do gbd (name of executable).
+    \item Now in the gbd prompt pass any arguments that are required by the program.?
+    \item r/run [args] to run the code
+    \item break/b main (stops as at the start)
+    \item break/b (file-name:line-number) to add breakpoints
+    \item next/n goes to the next line after a breakpoint or press enter to repeat the previous command.
+    \item step is same as next except that it doesn't treat functions as a single instruction but instead goes into them and execute each line one by one.
+    \item Nothing is printed by default
+    \item list/l prints the source code or press Ctrl-X-A and make your life simpler.
+    \item l (line number)
+    \item print/p (variable name) prints its value (also the corresponding gbd variable name)
+    \item r then conforming reruns the code 
+    \item p (variable name) (its value ) initializes the variable.
+    \item info local (prints all the local variables)
+    \item continue will start rerunning the code till the next breakpoint or the end.
+    \item disable ----- removes all the breakpoints
+    \item q to quit after finished
+    
+    
+    
+    \item In most use cases one wants to skip a number of iterations. Two ways to do this are: 
+    \item using break (line-number) if (condition e.g. i==50)  -------- This sets up a condition for breaking.
+    \item set a break point in the loop itself and then use c 50 --------- that is continue 50 times.
+    \item even changing the value of i should work right????? I don't think so, what will happen to the intermediate calculations.
+\end{enumerate}
+
+
+
+
+\noindent
+
+
+
+\subsection{Using gprof}
+
+Typical use:\\
+
+
+\begin{lstlisting}
+#!/bin/bash
+
+# build the program with profiling support (-gp)
+g++ -std=c++11 -pg cpuload.cpp -o cpuload
+
+# run the program; generates the profiling data file (gmon.out)
+./cpuload
+
+# print the callgraph
+gprof cpuload
+
+\end{lstlisting}
+
+
+\subsection{Using perf (most probably better than gprof but requires installation)}
+\textbf{May need to use sudo as well if permission denied.}
+
+compile \\
+perf record ./a.out\\
+or ...(to get callgraph).... perf record -g ./a.out\\
+perf report
+
+
+
+
+\subsection{Other alternatives include :}
+
+
+\begin{enumerate}
+    \item PAPI : seems to be something popular.
+    \item valgrind : Has multi-thread support and works well with very large programs. Use KCachegrind for visualization. Slow during profiling. No recompilation required. Good for detecting memory leaks.
+    \item gpreftools : By google, multi-thread support. Requires some changes in the code. KCachegrind or pprof. No considerable slowdown. Recompilation is required in the recommended way.
+\end{enumerate}
