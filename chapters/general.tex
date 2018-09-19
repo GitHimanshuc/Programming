@@ -1,0 +1,55 @@
+\chapter{General Tools}
+\section{Makefile}
+
+
+
+\begin{lstlisting}
+# These are variables that allow us to easily change compiler options
+CC=g++
+CFLAGS= -c -Wall
+
+#Calling make all (or just make as that executes the first line by default) 
+#will make make check the existence of prog  
+#thus it will go to the next line where we defined what prog is and 
+#what its dependencies are.
+
+all: prog
+
+
+#To get prog we ned main.o factorial.o and hello.o
+#make will look up whether they are present and are up to date**********
+#(it checks the last modified date, if the dependencies are newer it re-compiles)
+#if not it will re-compile the required dependencies***********
+#and finally when all the dependencies are up to date it will execute the 
+#command provided in the next line after a "'''tab spacing'''"
+#*********using spaces instead of tabs will not work.*************
+#the same format is followed throughout
+
+prog: main.o factorial.o hello.o
+    $(CC) main.o factorial.o hello.o -o prog
+    
+    
+main.o: main.cpp
+    $(CC) $(CFLAGS) main.cpp
+    
+    
+factorial.o: factorial.cpp
+    $(CC) $(CFLAGS) factorial.cpp
+    
+    
+hello.o: hello.cpp
+    $(CC) $(CFLAGS) hello.cpp
+    
+#this is a way to make make do some cleaning
+#make clean on being called will check for dependencies
+#there are none so it will simply execute the provided command 
+#which in this case will remove all the object files
+#this same trick can be used to do things like building and 
+#then copying copying the binary to some other location**************
+#like in other machines connected to the current machine and so on
+
+
+clean:
+    rm -rf *.o 
+    
+\end{lstlisting}
