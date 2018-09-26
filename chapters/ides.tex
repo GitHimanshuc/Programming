@@ -130,3 +130,136 @@ Press the debug button on the sidebar. Can set breakpoints using the red dots th
 
 
 
+\section{vim}
+
+Why i wasted almost 5 hours trying to use it is a mystery to me. But anyways things are more or less configured as per my taste - just simple auto completion and bracket closing moving a line up and down etc.
+
+\begin{lstlisting}
+set nocompatible              " required
+filetype off                  " required
+
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Bundle 'Valloric/YouCompleteMe'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+
+Plugin 'scrooloose/nerdtree'
+
+
+"Ctlr-P seaching for everything
+Plugin 'kien/ctrlp.vim'
+
+"Basic git 
+Plugin 'tpope/vim-fugitive'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set splitbelow
+set splitright
+
+
+" This is so that our spacing and all follows PIP8 standard.
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+set encoding=utf-8
+
+" This  will mark in red any extra white spaces that are present.
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+" auto-complete goes away when we are done. The next line maps space-g to goto
+" definition
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+
+"python with virtualenv support
+"py << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
+
+"Pretty looking python code
+
+let python_highlight_all=1
+syntax on
+
+
+
+"Line numbers
+set number relativenumber
+
+"Bracket completion
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<Esc>O<Tab>
+inoremap {;<CR> {<CR>};<Esc>O
+"map {<CR> :{<CR>{<CR>}<Esc>O
+
+
+"Moving lines up or down using Alt-j/k
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+
+"Some weird thing that has to done for Alt keymaps to work. Something to do
+"with meta keys and all??????????????
+"
+"Breaks a lot of other things, like yy followed by p was not working
+" Somehow Things are working now????????????
+"
+"for i in range(97,122)
+"  let c = nr2char(i)
+"  exec "map \e".c." <M-".c.">"
+"  exec "map! \e".c." <M-".c.">"
+"endfor
+
+\end{lstlisting}
+
+
+\subsection{some_useful_key_bindings}
+\textbf{Substitute multiple words/Will not work if substitution has space in between}
+
+\begin{enumerate}
+    \item /(type the word to be exchanged)
+    \item press enter,then <cgn>
+    \item type in the new word
+    \item press <esc>
+    \item . the required number of times
+\end{enumerate}
+
+\textbf{Almost like multiple cursors}
+\href{https://stackoverflow.com/questions/11784408/vim-multiline-editing-like-in-sublimetext}{Link of stack overflow answer.}
+
