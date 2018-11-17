@@ -263,3 +263,24 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 \textbf{Almost like multiple cursors}
 \href{https://stackoverflow.com/questions/11784408/vim-multiline-editing-like-in-sublimetext}{Link of stack overflow answer.}
 
+
+\textbf{Creating a new file from inside vim}
+
+:e (file path)
+
+
+
+\textbf{Wrapping text without without breaking words}
+:set linebreak
+
+\subsection{Spell check}
+
+\begin{enumerate}
+    \item type :set spell to start spell check
+    \item wrong words are highlighted in red
+    \item to go through the wrong words use [s or ]s
+    \item to add a word move cursor to that word and press zg
+    \item to remove a word form spell file use zug
+    \item \href{http://vimdoc.sourceforge.net/htmldoc/spell.html}{docs}
+\end{enumerate}
+
